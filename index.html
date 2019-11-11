@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Exercise</title>
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+
+</head>
+
+<body onload="init();">
+    <!--   trzeba dodać onload w body lub w head-->
+
+    <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;">
+    
+</canvas>
+    <script>
+        function init() {
+            var stage = new createjs.Stage("myCanvas");
+            //            przestrzeń dla animacji
+            var circle = new createjs.Shape();
+            circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
+            circle.x = 100;
+            circle.y = 100;
+//            stage.addChild(circle);
+            
+            
+            var circletwo = new createjs.Shape().set({x:100,y:100}); circletwo.graphics.beginFill("#ff0000").drawCircle(0,0,40); 
+            circletwo.filters = [ new createjs.ColorFilter(0,0,0,1, 0,0,255,0) ]; circletwo.cache(-50, -50, 100, 100); 
+            
+            var circlethree = new createjs.Shape().set({x:100,y:100}); circlethree.graphics.beginFill("#cccccc").drawCircle(0,0,30); 
+            circlethree.filters = [ new createjs.ColorFilter(0,0,0,1, 0,255,255,0) ]; circlethree.cache(-50, -50, 100, 100); 
+            
+            stage.addChild(circle, circletwo, circlethree);
+
+            createjs.Tween.get(circle, {loop: true}) .to({ x: 400 }, 1000, 
+            createjs.Ease.getPowInOut(4)) .to({ alpha: 0, y: 175 }, 500,
+            createjs.Ease.getPowInOut(2)) .to({ alpha: 0, y: 225 }, 100);            
+            
+            createjs.Tween.get(circletwo, {loop: true}) .to({ x: 300 }, 2000, 
+            createjs.Ease.linear()) .to({ alpha: 0, y: 175 }, 600, 
+            createjs.Ease.getPowInOut(2)) .to({ alpha: 0, y: 225 }, 100);
+            
+            
+            createjs.Tween.get(circlethree, {loop: true}) .to({ x: 500 }, 2000, 
+            createjs.Ease.backInOut()) .to({ alpha: 0, y: 175 }, 600, 
+            createjs.Ease.backInOut()) .to({ alpha: 0, y: 225 }, 200);
+            
+            //            stage.update();
+            //            wymagane by coś się pojawiło w easel, ale niepotrzebne w tweenjs, za to mamy w tween nastepujacey kod: 
+
+            createjs.Ticker.setFPS(60);
+            //            FPS (how many times you want the stage to refresh per second). 
+            createjs.Ticker.addEventListener("tick", stage);
+            
+            
+            
+            
+            
+        }
+    </script>
+
+</body>
+
+</html>
